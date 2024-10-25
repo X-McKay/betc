@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   mlflow:
@@ -30,9 +30,9 @@ services:
     command: tensorboard --logdir /runs --bind_all
     networks:
       - ml_network
-    depends_on:
-      mlflow:
-        condition: service_healthy
+    # depends_on:
+    # mlflow:
+    # condition: service_healthy
 
 networks:
   ml_network:

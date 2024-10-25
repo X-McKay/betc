@@ -12,6 +12,9 @@ dependencies = [
     "pydantic>=2.9.2",
     "scikit-learn>=1.5.2",
     "tqdm>=4.66.5",
+    "docker>=7.1.0",
+    "rich>=13.9.3",
+    "psutil>=6.1.0",
 ]
 readme = "README.md"
 requires-python = ">= 3.9"

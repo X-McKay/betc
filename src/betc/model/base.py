@@ -30,10 +30,10 @@ class EmailClassifier(nn.Module):
 
         # Load pre-trained BERT model and configuration
         self.config = config
-        model_config = AutoConfig.from_pretrained(config.model_name, num_labels=config.num_labels)
+        model_config = AutoConfig.from_pretrained(config.base_model_name, num_labels=config.num_labels)
 
         # Initialize BERT backbone
-        self.bert = AutoModel.from_pretrained(config.model_name)
+        self.bert = AutoModel.from_pretrained(config.base_model_name)
 
         # Classification head
         self.dropout = nn.Dropout(config.dropout_rate)

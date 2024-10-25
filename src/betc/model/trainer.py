@@ -3,6 +3,7 @@ trainer.py - Trainer class for email classification model with comprehensive log
 """
 import logging
 import os
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 from typing import Optional
@@ -71,7 +72,7 @@ class EmailClassifierTrainer:
 
         # Initialize tokenizer
         self.tokenizer = AutoTokenizer.from_pretrained(
-            model_config.model_name,
+            model_config.base_model_name,
             use_fast=True,  # Use fast tokenizer for better performance
         )
 
@@ -231,11 +232,15 @@ class EmailClassifierTrainer:
         """
         try:
             # Start MLflow run
-            with mlflow.start_run(run_name=self.training_config.run_name) as run:
+            active_run = mlflow.active_run()
+            if active_run is not None:
+                mlflow.end_run()
+            run_name = f"{self.model_config.base_model_name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+            with mlflow.start_run(run_name=run_name) as run:
                 # Log parameters
                 mlflow.log_params(
                     {
-                        "model_name": self.model_config.model_name,
+                        "base_model_name": self.model_config.base_model_name,
                         "learning_rate": self.training_config.learning_rate,
                         "batch_size": self.training_config.batch_size,
                         "num_epochs": self.training_config.num_epochs,
